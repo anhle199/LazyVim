@@ -1,16 +1,8 @@
 return {
-
-  -- tokyonight
-  {
-    "folke/tokyonight.nvim",
-    lazy = true,
-    opts = { style = "moon" },
-  },
-
-  -- catppuccin
-  {
-    "catppuccin/nvim",
-    lazy = true,
-    name = "catppuccin",
+  "Mofiqul/vscode.nvim",
+  opts = {
+    transparent = false,
+    italic_comments = true,
+    disable_nvimtree_bg = true,
   },
 }

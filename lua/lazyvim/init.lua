@@ -1,8 +1,9 @@
 local M = {}
 
----@param opts? LazyVimConfig
+---@param opts? LazyConfig
 function M.setup(opts)
-  require("lazyvim.config").setup(opts)
+  require("lazy").setup(opts)
+  require("lazyvim.config").setup()
 end
 
 return M
