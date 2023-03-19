@@ -59,6 +59,7 @@ return {
     },
     opts = {
       options = {
+        mode = "tabs",
         diagnostics = "nvim_lsp",
         always_show_bufferline = false,
         diagnostics_indicator = function(_, _, diag)
@@ -102,7 +103,17 @@ return {
         },
         sections = {
           lualine_a = { "mode" },
-          lualine_b = { "branch" },
+          lualine_b = { 
+            "branch",
+            {
+              "diff",
+              symbols = {
+                added = icons.git.added,
+                modified = icons.git.modified,
+                removed = icons.git.removed,
+              },
+            },
+          },
           lualine_c = {
             {
               "diagnostics",
@@ -115,11 +126,6 @@ return {
             },
             { "filetype", icon_only = true, separator = "", padding = { left = 1, right = 0 } },
             { "filename", path = 1, symbols = { modified = "  ", readonly = "", unnamed = "" } },
-            -- stylua: ignore
-            {
-              function() return require("nvim-navic").get_location() end,
-              cond = function() return package.loaded["nvim-navic"] and require("nvim-navic").is_available() end,
-            },
           },
           lualine_x = {
             -- stylua: ignore
@@ -135,14 +141,6 @@ return {
               color = fg("Constant") ,
             },
             { require("lazy.status").updates, cond = require("lazy.status").has_updates, color = fg("Special") },
-            {
-              "diff",
-              symbols = {
-                added = icons.git.added,
-                modified = icons.git.modified,
-                removed = icons.git.removed,
-              },
-            },
           },
           lualine_y = {
             { "progress", separator = " ", padding = { left = 1, right = 0 } },
@@ -150,7 +148,7 @@ return {
           },
           lualine_z = {
             function()
-              return " " .. os.date("%R")
+              return " " .. os.date("%Y-%m-%d %H:%M:%S")
             end,
           },
         },
@@ -230,24 +228,22 @@ return {
     opts = function()
       local dashboard = require("alpha.themes.dashboard")
       local logo = [[
-      ██╗      █████╗ ███████╗██╗   ██╗██╗   ██╗██╗███╗   ███╗          Z
-      ██║     ██╔══██╗╚══███╔╝╚██╗ ██╔╝██║   ██║██║████╗ ████║      Z    
-      ██║     ███████║  ███╔╝  ╚████╔╝ ██║   ██║██║██╔████╔██║   z       
-      ██║     ██╔══██║ ███╔╝    ╚██╔╝  ╚██╗ ██╔╝██║██║╚██╔╝██║ z         
-      ███████╗██║  ██║███████╗   ██║    ╚████╔╝ ██║██║ ╚═╝ ██║
-      ╚══════╝╚═╝  ╚═╝╚══════╝   ╚═╝     ╚═══╝  ╚═╝╚═╝     ╚═╝
+       █████╗ ███╗   ██╗██╗  ██╗    ██╗     ███████╗
+      ██╔══██╗████╗  ██║██║  ██║    ██║     ██╔════╝
+      ███████║██╔██╗ ██║███████║    ██║     █████╗  
+      ██╔══██║██║╚██╗██║██╔══██║    ██║     ██╔══╝  
+      ██║  ██║██║ ╚████║██║  ██║    ███████╗███████╗
+      ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝  ╚═╝    ╚══════╝╚══════╝
       ]]
 
       dashboard.section.header.val = vim.split(logo, "\n")
       dashboard.section.buttons.val = {
-        dashboard.button("f", " " .. " Find file", ":Telescope find_files <CR>"),
-        dashboard.button("n", " " .. " New file", ":ene <BAR> startinsert <CR>"),
-        dashboard.button("r", " " .. " Recent files", ":Telescope oldfiles <CR>"),
-        dashboard.button("g", " " .. " Find text", ":Telescope live_grep <CR>"),
-        dashboard.button("c", " " .. " Config", ":e $MYVIMRC <CR>"),
-        dashboard.button("s", " " .. " Restore Session", [[:lua require("persistence").load() <cr>]]),
-        dashboard.button("l", "󰒲 " .. " Lazy", ":Lazy<CR>"),
-        dashboard.button("q", " " .. " Quit", ":qa<CR>"),
+        dashboard.button("n", "  New file", ":ene <BAR> startinsert <CR>"),
+        dashboard.button("f", "  Find file", ":Telescope find_files <CR>"),
+        dashboard.button("g", "  Find text", ":Telescope live_grep <CR>"),
+        dashboard.button("c", "  Config", ":e $MYVIMRC <CR>"),
+        dashboard.button("l", "z  Lazy", ":Lazy<CR>"),
+        dashboard.button("q", "  Quit", ":qa<CR>"),
       }
       for _, button in ipairs(dashboard.section.buttons.val) do
         button.opts.hl = "AlphaButtons"
@@ -282,28 +278,6 @@ return {
           pcall(vim.cmd.AlphaRedraw)
         end,
       })
-    end,
-  },
-
-  -- lsp symbol navigation for lualine
-  {
-    "SmiteshP/nvim-navic",
-    lazy = true,
-    init = function()
-      vim.g.navic_silence = true
-      require("lazyvim.util").on_attach(function(client, buffer)
-        if client.server_capabilities.documentSymbolProvider then
-          require("nvim-navic").attach(client, buffer)
-        end
-      end)
-    end,
-    opts = function()
-      return {
-        separator = " ",
-        highlight = true,
-        depth_limit = 5,
-        icons = require("lazyvim.config").icons.kinds,
-      }
     end,
   },
 

@@ -25,6 +25,14 @@ return {
           end
         end,
       },
+      { 
+        "windwp/nvim-ts-autotag",
+        lazy = true,
+        -- stylua: ignore
+        ft = {
+          'html', 'javascript', 'typescript', 'javascriptreact', 'typescriptreact', 'svelte', 'vue', 'tsx', 'jsx', 'rescript', 'xml', 'php', 'markdown', 'glimmer', 'handlebars', 'hbs'
+        },
+      },
     },
     keys = {
       { "<c-space>", desc = "Increment selection" },
@@ -32,27 +40,23 @@ return {
     },
     ---@type TSConfig
     opts = {
-      highlight = { enable = true },
+      highlight = {
+        enable = true,
+        disable = function(_, buf)
+          local max_filesize = 1024 * 1024 -- 1MB
+          local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
+          if ok and stats and stats.size > max_filesize then
+            return true
+          end
+        end,
+      },
       indent = { enable = true, disable = { "python" } },
       context_commentstring = { enable = true, enable_autocmd = false },
+      -- stylua: ignore
       ensure_installed = {
-        "bash",
-        "c",
-        "help",
-        "html",
-        "javascript",
-        "json",
-        "lua",
-        "luap",
-        "markdown",
-        "markdown_inline",
-        "python",
-        "query",
-        "regex",
-        "tsx",
-        "typescript",
-        "vim",
-        "yaml",
+        "bash", "c", "cpp", "help", "html", "javascript", "json", "lua", "luap",
+        "markdown", "markdown_inline", "python", "query", "regex", "tsx",
+        "typescript", "vim", "yaml", "css", "java", "rust", "dockerfile", "sql",
       },
       incremental_selection = {
         enable = true,
@@ -62,6 +66,9 @@ return {
           scope_incremental = "<nop>",
           node_decremental = "<bs>",
         },
+      },
+      autotag = {
+        enable = true ,
       },
     },
     ---@param opts TSConfig
