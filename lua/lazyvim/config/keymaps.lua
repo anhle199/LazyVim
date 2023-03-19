@@ -20,10 +20,10 @@ map("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 map("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 
 -- Move to window using the <ctrl> hjkl keys
--- map("n", "<C-h>", "<C-w>h", { desc = "Go to left window" })
--- map("n", "<C-j>", "<C-w>j", { desc = "Go to lower window" })
--- map("n", "<C-k>", "<C-w>k", { desc = "Go to upper window" })
--- map("n", "<C-l>", "<C-w>l", { desc = "Go to right window" })
+map("n", "<C-h>", "<C-w>h", { desc = "Go to left window" })
+map("n", "<C-j>", "<C-w>j", { desc = "Go to lower window" })
+map("n", "<C-k>", "<C-w>k", { desc = "Go to upper window" })
+map("n", "<C-l>", "<C-w>l", { desc = "Go to right window" })
 
 -- Resize window using <ctrl> arrow keys
 map("n", "<C-Up>", "<cmd>resize +2<cr>", { desc = "Increase window height" })
@@ -97,6 +97,6 @@ if vim.fn.has("nvim-0.9.0") == 1 then
 end
 
 -- floating terminal
--- map("n", "<leader>ft", function() Util.float_term(nil, { cwd = Util.get_root() }) end, { desc = "Terminal (root dir)" })
--- map("n", "<leader>fT", function() Util.float_term() end, { desc = "Terminal (cwd)" })
--- map("t", "<esc><esc>", "<c-\\><c-n>", {desc = "Enter Normal Mode"})
+map("n", "<leader>t", function() Util.float_term() end, { desc = "Terminal (cwd)" })
+map("n", "<leader>T", function() Util.float_term(nil, { cwd = Util.get_root() }) end, { desc = "Terminal (root dir)" })
+map("t", "<esc><esc>", "<c-\\><c-n>", { desc = "Enter Normal Mode" })
