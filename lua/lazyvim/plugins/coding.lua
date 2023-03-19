@@ -54,10 +54,6 @@ return {
           ["<C-Space>"] = cmp.mapping.complete(),
           ["<C-e>"] = cmp.mapping.abort(),
           ["<CR>"] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-          ["<S-CR>"] = cmp.mapping.confirm({
-            behavior = cmp.ConfirmBehavior.Replace,
-            select = true,
-          }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
           ["<Tab>"] = cmp.mapping(function(fallback)
             if cmp.visible() then
               cmp.select_next_item()
@@ -80,9 +76,9 @@ return {
           end, { "i", "s" }),
         }),
         sources = cmp.config.sources({
-          { name = "nvim_lsp", priority = 1000 },
-          { name = "luasnip", priority = 750 },
-          { name = "path", priority = 500  },
+          { name = "nvim_lsp" },
+          { name = "luasnip" },
+          { name = "path" },
         }),
         formatting = {
           format = function(_, item)
@@ -149,10 +145,10 @@ return {
   {
     "echasnovski/mini.comment",
     event = "VeryLazy",
-    mappings = {
-      textobject = 'gcc',
-    },
     opts = {
+      mappings = {
+        comment = "gcc",
+      },
       hooks = {
         pre = function()
           require("ts_context_commentstring.internal").update_commentstring({})

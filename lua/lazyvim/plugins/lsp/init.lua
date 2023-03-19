@@ -19,24 +19,23 @@ return {
     opts = {
       -- options for vim.diagnostic.config()
       diagnostics = {
-        underline = true,
+        underline = false,
         update_in_insert = false,
-        virtual_text = { spacing = 4, prefix = "●" },
+        virtual_text = false, -- { spacing = 4, prefix = "●" },
         severity_sort = true,
+        float = {
+          focusable = true,
+          style = "minimal",
+          border = "rounded",
+        },
       },
-      -- Automatically format on save
       autoformat = true,
-      -- options for vim.lsp.buf.format
-      -- `bufnr` and `filter` is handled by the LazyVim formatter,
-      -- but can be also overridden when specified
       format = {
         formatting_options = nil,
         timeout_ms = nil,
       },
-      -- LSP Server Settings
       ---@type lspconfig.options
       servers = {
-        jsonls = {},
         lua_ls = {
           -- mason = false, -- set to false if you don't want this server to be installed with mason
           settings = {
@@ -51,23 +50,12 @@ return {
           },
         },
       },
-      -- you can do any additional lsp server setup here
-      -- return true if you don't want this server to be setup with lspconfig
-      ---@type table<string, fun(server:string, opts:_.lspconfig.options):boolean?>
-      setup = {
-        -- example to setup with typescript.nvim
-        -- tsserver = function(_, opts)
-        --   require("typescript").setup({ server = opts })
-        --   return true
-        -- end,
-        -- Specify * to use this function as a fallback for any server
-        -- ["*"] = function(server, opts) end,
-      },
     },
     ---@param opts PluginLspOpts
     config = function(_, opts)
       -- setup autoformat
       require("lazyvim.plugins.lsp.format").autoformat = opts.autoformat
+
       -- setup formatting and keymaps
       require("lazyvim.util").on_attach(function(client, buffer)
         require("lazyvim.plugins.lsp.format").on_attach(client, buffer)
@@ -132,13 +120,27 @@ return {
     opts = function()
       local nls = require("null-ls")
       return {
-        root_dir = require("null-ls.utils").root_pattern(".null-ls-root", ".neoconf.json", "Makefile", ".git"),
+        root_dir = require("null-ls.utils").root_pattern(
+          ".null-ls-root",
+          ".neoconf.json",
+          "Makefile",
+          ".git",
+          "package.json",
+          "tsconfig.json",
+          "jsconfig.json",
+          "pyproject.toml",
+          "setup.py",
+          "setup.cfg",
+          "requirements.txt",
+          "Pipfile",
+          "pyrightconfig.json"
+        ),
+
         sources = {
           nls.builtins.formatting.fish_indent,
           nls.builtins.diagnostics.fish,
           nls.builtins.formatting.stylua,
           nls.builtins.formatting.shfmt,
-          nls.builtins.diagnostics.flake8,
         },
       }
     end,
@@ -154,7 +156,6 @@ return {
       ensure_installed = {
         "stylua",
         "shfmt",
-        "flake8",
       },
     },
     ---@param opts MasonSettings | {ensure_installed: string[]}

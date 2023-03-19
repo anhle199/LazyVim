@@ -43,6 +43,7 @@ function M.on_attach(client, buf)
     client.config
     and client.config.capabilities
     and client.config.capabilities.documentFormattingProvider == false
+    and client.config.capabilities.documentRangeFormattingProvider == false
   then
     return
   end

@@ -25,7 +25,7 @@ return {
           end
         end,
       },
-      { 
+      {
         "windwp/nvim-ts-autotag",
         lazy = true,
         -- stylua: ignore
@@ -54,8 +54,8 @@ return {
       context_commentstring = { enable = true, enable_autocmd = false },
       -- stylua: ignore
       ensure_installed = {
-        "bash", "c", "cpp", "help", "html", "javascript", "json", "lua", "luap",
-        "markdown", "markdown_inline", "python", "query", "regex", "tsx",
+        "bash", "c", "cpp", "help", "html", "javascript", "json", "json5", "jsonc", "lua",
+        "luap", "markdown", "markdown_inline", "python", "query", "regex", "tsx",
         "typescript", "vim", "yaml", "css", "java", "rust", "dockerfile", "sql",
       },
       incremental_selection = {
@@ -68,7 +68,7 @@ return {
         },
       },
       autotag = {
-        enable = true ,
+        enable = true,
       },
     },
     ---@param opts TSConfig

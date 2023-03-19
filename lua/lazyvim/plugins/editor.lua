@@ -113,12 +113,6 @@ return {
             ["<C-Up>"] = function(...)
               return require("telescope.actions").cycle_history_prev(...)
             end,
-            ["<C-f>"] = function(...)
-              return require("telescope.actions").preview_scrolling_down(...)
-            end,
-            ["<C-b>"] = function(...)
-              return require("telescope.actions").preview_scrolling_up(...)
-            end,
           },
           n = {
             ["q"] = function(...)
@@ -226,7 +220,7 @@ return {
       { "[[", desc = "Prev Reference" },
     },
   },
-  
+
   -- better diagnostics list and others
   {
     "folke/trouble.nvim",
