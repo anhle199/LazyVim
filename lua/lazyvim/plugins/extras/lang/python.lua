@@ -12,7 +12,7 @@ return {
     "williamboman/mason.nvim",
     opts = function(_, opts)
       if type(opts.ensure_installed) == "table" then
-        vim.list_extend(opts.ensure_installed, { "pyright", "black", "isort", "pylint", "flake8" })
+        vim.list_extend(opts.ensure_installed, { "black", "isort", "pylint", "flake8" })
         -- missing "djlint"
       end
     end,

@@ -1,5 +1,4 @@
 return {
-  -- lspconfig
   {
     "neovim/nvim-lspconfig",
     event = { "BufReadPre", "BufNewFile" },
@@ -29,7 +28,7 @@ return {
           border = "rounded",
         },
       },
-      autoformat = true,
+      autoformat = false,
       format = {
         formatting_options = nil,
         timeout_ms = nil,
@@ -37,7 +36,6 @@ return {
       ---@type lspconfig.options
       servers = {
         lua_ls = {
-          -- mason = false, -- set to false if you don't want this server to be installed with mason
           settings = {
             Lua = {
               workspace = {
@@ -112,7 +110,6 @@ return {
     end,
   },
 
-  -- formatters
   {
     "jose-elias-alvarez/null-ls.nvim",
     event = { "BufReadPre", "BufNewFile" },
@@ -137,8 +134,6 @@ return {
         ),
 
         sources = {
-          nls.builtins.formatting.fish_indent,
-          nls.builtins.diagnostics.fish,
           nls.builtins.formatting.stylua,
           nls.builtins.formatting.shfmt,
         },
@@ -146,7 +141,6 @@ return {
     end,
   },
 
-  -- cmdline tools and lsp servers
   {
 
     "williamboman/mason.nvim",
