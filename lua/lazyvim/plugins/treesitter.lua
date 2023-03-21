@@ -56,9 +56,10 @@ return {
       context_commentstring = { enable = true, enable_autocmd = false },
       -- stylua: ignore
       ensure_installed = {
-        "bash", "c", "cpp", "help", "html", "javascript", "json", "json5", "jsonc", "lua",
-        "luap", "markdown", "markdown_inline", "python", "query", "regex", "tsx",
-        "typescript", "vim", "yaml", "css", "java", "rust", "dockerfile", "sql",
+        "bash", "c", "cpp", "help", "html", "javascript", "json", "json5", "jsonc",
+        "lua", "luadoc", "luap", "markdown", "markdown_inline", "python", "query",
+        "regex", "tsx", "typescript", "vim", "yaml", "css", "java", "rust",
+        "dockerfile", "sql",
       },
       incremental_selection = {
         enable = true,
