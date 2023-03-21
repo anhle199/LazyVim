@@ -9,16 +9,16 @@ return {
       {
         "<leader>e",
         function()
-          require("neo-tree.command").execute({ toggle = true, dir = require("lazyvim.util").get_root() })
+          require("neo-tree.command").execute({ toggle = true, dir = vim.loop.cwd() })
         end,
-        desc = "Explorer NeoTree (root dir)",
+        desc = "Explorer NeoTree (cwd)",
       },
       {
         "<leader>E",
         function()
-          require("neo-tree.command").execute({ toggle = true, dir = vim.loop.cwd() })
+          require("neo-tree.command").execute({ toggle = true, dir = require("lazyvim.util").get_root() })
         end,
-        desc = "Explorer NeoTree (cwd)",
+        desc = "Explorer NeoTree (root dir)",
       },
     },
     deactivate = function()

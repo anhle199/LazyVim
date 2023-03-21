@@ -12,8 +12,7 @@ return {
     "williamboman/mason.nvim",
     opts = function(_, opts)
       if type(opts.ensure_installed) == "table" then
-        vim.list_extend(opts.ensure_installed, { "black", "isort", "pylint", "flake8" })
-        -- missing "djlint"
+        vim.list_extend(opts.ensure_installed, { "djlint", "black", "isort", "pylint", "flake8" })
       end
     end,
   },
@@ -55,6 +54,8 @@ return {
       vim.list_extend(opts.sources, {
         nls_builtin.formatting.black.with({ extra_args = { "--fast", "--line-length=120" } }),
         nls_builtin.formatting.isort.with({ extra_args = { "--style=black" } }),
+        nls_builtin.formatting.djlint,
+        nls_builtin.diagnostics.djlint,
         nls_builtin.diagnostics.flake8,
         nls_builtin.diagnostics.pylint,
       })
