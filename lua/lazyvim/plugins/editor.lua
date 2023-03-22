@@ -4,6 +4,7 @@ return {
   -- file explorer
   {
     "nvim-neo-tree/neo-tree.nvim",
+    enabled = false,
     cmd = "Neotree",
     keys = {
       {
@@ -56,6 +57,62 @@ return {
           expander_collapsed = "",
           expander_expanded = "",
           expander_highlight = "NeoTreeExpander",
+        },
+      },
+    },
+  },
+
+  {
+    "nvim-tree/nvim-tree.lua",
+    keys = {
+      { "<leader>e", "<cmd>NvimTreeToggle<cr>" },
+      {
+        "<leader>E",
+        function()
+          local root_of_cf = require("lazyvim.util").get_root()
+          local nvim_tree_api = require("nvim-tree.api")
+          nvim_tree_api.toggle({ path = root_of_cf, focus = false })
+        end,
+      },
+    },
+    init = function()
+      if vim.fn.argc() == 1 then
+        local stat = vim.loop.fs_stat(vim.fn.argv(0))
+        if stat and stat.type == "directory" then
+          require("nvim-tree")
+        end
+      end
+    end,
+    opts = {
+      disable_netrw = true,
+      hijack_cursor = true,
+      root_dirs = {},
+      prefer_startup_root = true,
+      view = {
+        width = 36,
+      },
+      renderer = {
+        group_empty = true,
+        highlight_git = true,
+        highlight_modified = "all",
+        icons = {
+          git_placement = "after",
+        },
+      },
+      update_focused_file = {
+        enable = true,
+        update_root = true,
+      },
+      diagnostics = {
+        enable = true,
+        show_on_dirs = false,
+      },
+      filters = {
+        exclude = { ".git", "target", "build", "node_modules", "dist", "__tests__", "logs" },
+      },
+      actions = {
+        expand_all = {
+          exclude = { ".git", "target", "build", "node_modules", "dist", "__tests__", "logs" },
         },
       },
     },
