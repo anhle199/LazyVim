@@ -114,6 +114,11 @@ return {
         expand_all = {
           exclude = { ".git", "target", "build", "node_modules", "dist", "__tests__", "logs" },
         },
+        open_file = {
+          window_picker = {
+            chars = "1234567890",
+          },
+        },
       },
     },
   },
